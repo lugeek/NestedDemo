@@ -3,6 +3,7 @@ package com.lugeek.nestedscroll2demo;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.NestedScrollingChild2;
 import android.support.v4.view.NestedScrollingParent2;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.view.ViewCompat;
@@ -48,9 +49,10 @@ public class NestedScrollView2 extends NestedScrollView implements NestedScrolli
     public void onNestedScroll(
             @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
 
+        //如果已经滑到顶或底，则停止子view继续滚动。
         if (type == TYPE_NON_TOUCH && ((dyUnconsumed > 0 && !canScrollVertically(1)) || (dyUnconsumed < 0 && !canScrollVertically(-1)))) {
-            if (target instanceof NestedScrollView) {
-                ((NestedScrollView) target).stopNestedScroll(type);
+            if (target instanceof NestedScrollingChild2) {
+                ((NestedScrollingChild2) target).stopNestedScroll(type);
                 return;
             }
         }
